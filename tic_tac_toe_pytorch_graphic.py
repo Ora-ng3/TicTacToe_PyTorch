@@ -132,7 +132,7 @@ def reset_game():
         player = 1  # Le joueur commence
     else:
         player = -1  # Le modèle commence
-        root.after(100, ai_play)  # Appelle ai_play() avec un léger délai
+        root.after(100, model_play)  # Appelle model_play() avec un léger délai
 
     for btn in buttons:
         btn.config(text="", state="normal")
@@ -150,19 +150,19 @@ def on_click(index):
         # Passer au tour du modèle si le jeu n'est pas terminé
         if 0 in state and check_winner(state) == 0:
             player = -1  # Tour du modèle
-            ai_play()
+            model_play()
 
 # Fait jouer le modèle
-def ai_play():
+def model_play():
     print("Le modèle joue...")
     global player
     action = predict_action(state, model)  # Le modèle choisit une action
     while state[action] != 0:  # S'assure que l'action est valide
         action = predict_action(state, model)
-    print(f"L'IA a choisi l'action {action}")
-    # Coup de l'IA
+    print(f"Le modèle a choisi l'action {action}")
+    # Coup du modèle
     state[action] = player
-    print(f"État après le coup de l'IA : {state}")
+    print(f"État après le coup du modèle : {state}")
     buttons[action].config(text="O")
     check_game_over()
 
